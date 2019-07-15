@@ -161,6 +161,74 @@ class AX3003P():
         """
         return float(self.sendReadCommand("MEAS:POW?"))
 
+    def enableOvp(self):
+        """ Enable overvoltage protection.
+        """
+        self.sendWriteCommand("VOLT:PROT:STAT ON")
+
+    def disableOvp(self):
+        """ Disable overvoltage protection.
+        """
+        self.sendWriteCommand("VOLT:PROT:STAT OFF")
+
+    def enableOcp(self):
+        """ Enable overvoltage protection.
+        """
+        self.sendWriteCommand("CURR:PROT:STAT ON")
+
+    def disableOcp(self):
+        """ Disable overvoltage protection.
+        """
+        self.sendWriteCommand("CURR:PROT:STAT OFF")
+
+    def setOvpTreshold(self, voltageThreshold):
+        """ Set overvoltage protection threshold.
+
+        :param voltageThreshold: Voltage treshold in Volts.
+        :type voltageThreshold: Float
+        """
+        self.sendWriteCommand("VOLT:PROT " + str(voltageThreshold))
+
+    def setOcpTreshold(self, currentThreshold):
+        """ Set overcurrent protection threshold.
+
+        :param currentThreshold: Current treshold in Amps.
+        :type currentThreshold: Float
+        """
+        self.sendWriteCommand("CURR:PROT " + str(currentThreshold))
+
+    def ovpTripped(self):
+        """ Check if overvoltage protection has tripped.
+        Returns True if overvoltage protection has tripped.
+        Returns False if it hasn't tripped.
+        Returns None if error occured while checking the ovp state.
+
+        :return: True if ovp has tripped, False if it is not.
+        :rtype: Boolean
+        """
+        return self.sendReadCommand("VOLT:PROT:TRIP?") == "ON"
+
+    def ocpTripped(self):
+        """ Check if overcurrent protection has tripped.
+        Returns True if overcurrent protection has tripped.
+        Returns False if it hasn't tripped.
+        Returns None if error occured while checking the ovp state.
+
+        :return: True if ocp has tripped, False if it is not.
+        :rtype: Boolean
+        """
+        return self.sendReadCommand("CURR:PROT:TRIP?") == "ON"
+
+    def resetOvp(self):
+        """ Reset overvoltage protection.
+        """
+        self.sendWriteCommand("VOLT:PROT:CLE")
+
+    def resetOcp(self):
+        """ Reset overcurrent protection.
+        """
+        self.sendWriteCommand("CURR:PROT:CLE")
+
     def enableOutput(self):
         """ Enable the power supply output.
         """
