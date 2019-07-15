@@ -37,6 +37,6 @@ setup(name='AX3003P',
                    'Programming Language :: Python :: 3',
                   ],
      install_requires=[
-          'serial',
+          'pyserial',
       ],
      )
