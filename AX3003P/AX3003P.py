@@ -16,8 +16,8 @@ AX3003P Programmable Power Supply control library.
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 # OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import serial
 from time import sleep, time_ns
+import serial
 
 WRITE_COMMAND_DELAY = 0.1 # 100ms - Delay after the write command.
 READ_RETRIES_DELAY = 0.03 # 30ms - Delay between read command and waiting for response
@@ -95,7 +95,7 @@ class AX3003P():
         :type timeout: Int
 
         :return: Response or None if there is no response.
-        :rtype: Str or None
+        :rtype: Str
         """
 
         # message must be in a form of a byte array
@@ -113,3 +113,71 @@ class AX3003P():
                 return received[:-1]
 
         return None
+
+    def setVoltage(self, voltage):
+        """ Set output voltage.
+
+        :param voltage: Output voltage in Volts.
+        :type voltage: Float
+        """
+        self.sendWriteCommand("VOLT "+str(voltage))
+
+    def setCurrent(self, current):
+        """ Set output current.
+
+        :param current: Output current in Amps.
+        :type current: Float
+        """
+        self.sendWriteCommand("CURR "+str(current))
+
+    def measureVoltage(self):
+        """ Measure voltage on the power supply output.
+        Function returns the voltage across the power supply terminals
+        in Volts. It returns None if the read operation has failed.
+
+        :return: Output voltage.
+        :rtype: Float
+        """
+        return float(self.sendReadCommand("MEAS:VOLT?"))
+
+    def measureCurrent(self):
+        """ Measure voltage on the power supply output.
+        Function returns the current flowing througth the power supply terminals.
+        in Amps. It returns None if the read operation has failed.
+
+        :return: Output current.
+        :rtype: Float
+        """
+        return float(self.sendReadCommand("MEAS:CURR?"))
+
+    def measurePower(self):
+        """ Measure power delivered by the power supply output.
+        Function returns the current power consumed by the load connected
+        to the power supply termonals in Watts.
+        It returns None if the read operation has failed.
+
+        :return: Output power.
+        :rtype: Float
+        """
+        return float(self.sendReadCommand("MEAS:POW?"))
+
+    def enableOutput(self):
+        """ Enable the power supply output.
+        """
+        self.sendWriteCommand("OUTP ON")
+
+    def disableOutput(self):
+        """ Disable the power supply output.
+        """
+        self.sendWriteCommand("OUTP OFF")
+
+    def outputEnabled(self):
+        """ Check if output is enabled.
+        Returns the state of the power supply output.
+        If output is enabled, True is Returned, if not, False
+        is returned. None is returned if the read operation has failed.
+
+        :return: Power supply state.
+        :rtype: Boolean
+        """
+        return bool(self.sendReadCommand("OUTP?"))
