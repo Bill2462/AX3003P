@@ -13,7 +13,9 @@ It is released under MIT license, see LICENSE for more details.
 
 _`project page on GitHub`: https://github.com/Bill2462/AX3003P
 
-Contents:
+
+Table of contents: 
+=================
 
 .. toctree::
     :maxdepth: 2
@@ -22,9 +24,4 @@ Contents:
     API
     examples
 
-Indices and tables
-==================
-
 * :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
