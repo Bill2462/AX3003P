@@ -1,4 +1,5 @@
 # AX3003P Programmable DC Power Supply Control Library
+[![Documentation Status](https://readthedocs.org/projects/ax3003p/badge/?version=latest)](https://ax3003p.readthedocs.io/en/latest/?badge=latest)
 
 Python package that provides an API for controlling AX3003P programmable power supply.
 It works on Linux, OSX, Windows and BSD.
@@ -37,4 +38,4 @@ python setup.py install
 ```
 
 ## Documentation
-Available on readthedocs.org : 
+Available on readthedocs.org : https://ax3003p.readthedocs.io/en/latest
